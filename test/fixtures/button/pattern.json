@@ -1,0 +1,22 @@
+{
+  "title": "Button",
+  "stability": "unstable",
+  "properties": {
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "color": {
+      "enum": [
+        "wisteria",
+        "white-wisteria",
+        "teal",
+        "white-teal"
+      ]
+    },
+    "full-width": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

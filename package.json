@@ -1,0 +1,55 @@
+{
+  "name": "@namics/nitro-component-handlebars",
+  "version": "0.0.1",
+  "description": "A handlebars helper to render a nitro component",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "ava -v",
+    "posttest": "npm-run-all posttest:*",
+    "posttest:lint": "eslint .",
+    "posttest:coverage": "nyc ava",
+    "posttest:coverage-report": "nyc report --reporter=html",
+    "posttest:coverage-check": "nyc check-coverage --lines 100 --functions 100 --branches 100"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namics/nitro-component-handlebars"
+  },
+  "keywords": [
+    "nitro",
+    "component",
+    "validation"
+  ],
+  "author": "Jan Nicklas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/namics/nitro-component-handlebars/issues"
+  },
+  "homepage": "https://github.com/namics/nitro-component-handlebars#readme",
+  "dependencies": {
+    "ajv": "^4.4.0",
+    "jsonic": "^0.2.2",
+    "lodash": "^4.14.2"
+  },
+  "peerDependencies": {
+    "hbs": "*"
+  },
+  "devDependencies": {
+    "@namics/eslint-config": "^1.0.0",
+    "ava": "^0.16.0",
+    "babel-eslint": "^6.1.2",
+    "coveralls": "^2.11.12",
+    "denodeify": "^1.2.1",
+    "eslint": "^3.2.2",
+    "eslint-plugin-import": "^1.12.0",
+    "find-up": "^1.1.2",
+    "handlebars": "^4.0.5",
+    "hbs": "^4.0.0",
+    "ncp": "^2.0.0",
+    "npm-run-all": "^2.3.0",
+    "nyc": "^7.1.0"
+  }
+}
