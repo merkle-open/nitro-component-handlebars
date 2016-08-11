@@ -4,7 +4,8 @@
   "description": "A handlebars helper to render a nitro component",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "lib"
   ],
   "scripts": {
     "test": "ava -v",
