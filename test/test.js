@@ -32,7 +32,7 @@ test('should resolve a full template path', async (t) => {
 test('should resolve an absolute template path', async (t) => {
 	const templateFile = TemplateResolver.resolveTemplatePath(
 		'/demo/components/atoms/button/button.hbs', rootDirectory);
-	const expectedFile = '/demo/components/atoms/button/button.hbs';
+	const expectedFile = path.resolve('/demo/components/atoms/button/button.hbs');
 	t.is(templateFile, expectedFile);
 	t.pass();
 });
