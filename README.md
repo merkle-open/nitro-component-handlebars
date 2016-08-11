@@ -26,7 +26,7 @@ module.exports = componentHandlebarsHelper({
 
 ### Default
 
-the following code will render `components/atoms/button/button.hbs`:
+The following code will render `components/atoms/button/button.hbs`:
 
 ```
 {{component "components/atoms/button"}}
@@ -34,7 +34,7 @@ the following code will render `components/atoms/button/button.hbs`:
 
 ### Child elements
 
-the following code will set the value of `{{children}}` to `'Click me'`:
+The following code will set the value of `{{children}}` to `'Click me'`:
 
 ```
 {{#component "components/atoms/button"}}
@@ -44,7 +44,7 @@ the following code will set the value of `{{children}}` to `'Click me'`:
 
 ### Attributes
 
-the following code will set the value of `{{size}}` to `'xl'`:
+The following code will set the value of `{{size}}` to `'xl'`:
 
 ```
 {{component "components/atoms/button" size="xl"}}
@@ -52,8 +52,9 @@ the following code will set the value of `{{size}}` to `'xl'`:
 
 ### Data files
 
-the following code will set the template variables to the content of
-`components/atoms/button/_data/demo.json`
+The following code will set the template variables to the content of 
+`components/atoms/button/_data/demo.json`:
+
 
 ```
 {{component "components/atoms/button" data-file="demo.json"}}
@@ -61,7 +62,7 @@ the following code will set the template variables to the content of
 
 ### Rendering foreign modules
 
-the following code will render a component from another node_module
+The following code will render a component from another node_module
 e.g. `node_modules/base-pattern/components/atoms/button/button.json`
 
 ```
