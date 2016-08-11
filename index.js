@@ -26,7 +26,7 @@ function ComponentHandlebarsHelper(userConfig) {
 		// Schema filename
 		schemaName: 'pattern.json',
 		// Is a schema required
-		schemaRequired: false,
+		useSchema: false,
 		// Prerender handler to modify the data object
 		preRenderHandler: (templateRenderData) => templateRenderData,
 		// Prevalidate handler to modify the schema
@@ -65,7 +65,9 @@ function ComponentHandlebarsHelper(userConfig) {
 				config
 			};
 			// Get template schema
-			const baseSchema = TemplateValidator.getSchema(componentInformation.templateDirectory, config);
+			const baseSchema = config.useSchema
+				? TemplateValidator.getSchema(componentInformation.templateDirectory, config.schemaName)
+				: null;
 			// Allow to modify the schema instance
 			componentInformation.templateSchema = config.preValidateHandler(
 				baseSchema,
@@ -79,7 +81,9 @@ function ComponentHandlebarsHelper(userConfig) {
 				componentInformation
 			);
 			// Validate render data
-			TemplateValidator.validate(componentRenderData, componentInformation);
+			if (config.useSchema) {
+				TemplateValidator.validate(componentRenderData, componentInformation);
+			}
 			const componentTemplate = fs.readFileSync(templatePath).toString();
 			// Render template
 			return new hbs.handlebars.SafeString(
