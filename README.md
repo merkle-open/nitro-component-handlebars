@@ -50,9 +50,17 @@ The following code will set the value of `{{size}}` to `'xl'`:
 {{component "components/atoms/button" size="xl"}}
 ```
 
+### Array attributes
+
+The following code will set the value of `{{sizes}}` to `['xl', 'l']`:
+
+```
+{{component "components/atoms/button" sizes="['xl', 'l']"}}
+```
+
 ### Data files
 
-The following code will set the template variables to the content of 
+The following code will set the template variables to the content of
 `components/atoms/button/_data/demo.json`:
 
 

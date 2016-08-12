@@ -1,0 +1,20 @@
+{
+  "title": "Button Array Test",
+  "stability": "unstable",
+  "properties": {
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "colors": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "red",
+          "blue",
+          "black"
+        ]
+      }
+    }
+  }
+}

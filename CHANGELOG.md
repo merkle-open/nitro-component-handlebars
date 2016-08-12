@@ -1,6 +1,11 @@
 Change History
 ==============
 
+v0.0.3
+------
+* Improve error messages
+* Turn primitives into arrays if schema matches
+
 v0.0.2
 ------
 * Rename `schemaRequired` to `useSchema`

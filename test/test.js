@@ -76,7 +76,7 @@ test('should check the schema for a template', async (t) => {
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
 	const error = getErrorMessage(() => Handlebars.compile(
 		'{{component "fixtures/button"}}')({}));
-	t.is(error, 'data should have required property \'color\'');
+	t.is(error, '{{component "fixtures/button"}} data should have required property \'color\'');
 	t.pass();
 });
 
@@ -129,7 +129,7 @@ test('should allow to pass an object to the template', async (t) => {
 test('should throw on invalid objects arguments', async (t) => {
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname }));
 	const error = getErrorMessage(() => Handlebars.compile('{{component "fixtures/object-test" classes="[1,2]]"}}')({}));
-	const expectedError = 'Invalid jsonic attribute for "fixtures/object-test": "classes"="[1,2]]" - Expected end of input but "]" found.';
+	const expectedError = '{{component "fixtures/object-test"}} Invalid jsonic attribute for "fixtures/object-test": "classes"="[1,2]]" - Expected end of input but "]" found.';
 	t.is(error, expectedError);
 	t.pass();
 });
@@ -138,7 +138,7 @@ test('should throw on incomplete schema definitions', async (t) => {
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
 	const error = getErrorMessage(() => Handlebars.compile('{{component "fixtures/incomplete-schema"}}')({}));
 	const schemaFile = path.resolve(__dirname, 'fixtures/incomplete-schema/pattern.json');
-	const expectedError = `Schema ${schemaFile} is missing a property definition`;
+	const expectedError = `{{component "fixtures/incomplete-schema"}} Schema ${schemaFile} is missing a property definition`;
 	t.is(error, expectedError);
 	t.pass();
 });
@@ -147,7 +147,7 @@ test('should throw on invalid schema definitions', async (t) => {
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
 	const error = getErrorMessage(() => Handlebars.compile('{{component "fixtures/invalid-schema"}}')({}));
 	const schemaFile = path.resolve(__dirname, 'fixtures/invalid-schema/pattern.json');
-	const expectedError = `Failed to parse ${schemaFile} Unexpected token }`;
+	const expectedError = `{{component "fixtures/invalid-schema"}} Failed to parse ${schemaFile} Unexpected token }`;
 	t.is(error.indexOf(expectedError), 0);
 	t.pass();
 });
@@ -156,7 +156,7 @@ test('should throw on if the schema does not match the json schema standard', as
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
 	const error = getErrorMessage(() => Handlebars.compile('{{component "fixtures/invalid-schema2"}}')({}));
 	const schemaFile = path.resolve(__dirname, 'fixtures/invalid-schema2/pattern.json');
-	const expectedError = `Error in ${schemaFile}: "data.properties['x'].type should be equal to one of the allowed values, data.properties['x'].type should be array, data.properties['x'].type should match some schema in anyOf"`;
+	const expectedError = `{{component "fixtures/invalid-schema2"}} Error in ${schemaFile}: "data.properties['x'].type should be equal to one of the allowed values, data.properties['x'].type should be array, data.properties['x'].type should match some schema in anyOf"`;
 	t.is(error, expectedError);
 	t.pass();
 });
@@ -165,7 +165,7 @@ test('should throw on missing schema definitions - if a schema is required', asy
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
 	const error = getErrorMessage(() => Handlebars.compile('{{component "fixtures/missing-schema"}}')({}));
 	const schemaFile = path.resolve(__dirname, 'fixtures/missing-schema/pattern.json');
-	const expectedError = `ENOENT: no such file or directory, open '${schemaFile}'`;
+	const expectedError = `{{component "fixtures/missing-schema"}} ENOENT: no such file or directory, open '${schemaFile}'`;
 	t.is(error, expectedError);
 	t.pass();
 });
@@ -204,7 +204,7 @@ test('should allow to use a data file', async (t) => {
 		'{{component "fixtures/data-test" data-file="invalid"}}'
 	)({}));
 	const jsonFile = path.resolve(__dirname, 'fixtures/data-test/_data/invalid.json');
-	const expectedError = `Failed to parse "${jsonFile}" Expected end of input but "}" found.`;
+	const expectedError = `{{component "fixtures/data-test"}} Failed to parse "${jsonFile}" Expected end of input but "}" found.`;
 	t.is(error, expectedError);
 	t.pass();
 });
@@ -224,6 +224,32 @@ test('should allow to specifiy required arguments', async (t) => {
 	const html = Handlebars.compile('{{component "fixtures/required" color="teal"}}')({});
 	const expectedHtml = '<button class="ux-a-button ux-a-button--teal" >\n  \n</button>\n';
 	t.is(html, expectedHtml);
+	t.pass();
+});
+
+test('should allow to use arrays as values', async (t) => {
+	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
+	const html = Handlebars.compile('{{component "fixtures/array-test" colors="[\'black\', \'red\']"}}')({});
+	const expectedHtml = '<button class="ux-a-button ux-a-button--black ux-a-button--red" >\n  \n</button>\n';
+	t.is(html, expectedHtml);
+	t.pass();
+});
+
+test('should allow to use arrays with shorthand values', async (t) => {
+	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
+	const html = Handlebars.compile('{{component "fixtures/array-test" colors="black"}}')({});
+	const expectedHtml = '<button class="ux-a-button ux-a-button--black" >\n  \n</button>\n';
+	t.is(html, expectedHtml);
+	t.pass();
+});
+
+test('should tell the file name of the error source', async (t) => {
+	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
+	const error = getErrorMessage(() => Handlebars.compile(
+		'{{component "fixtures/array-test"}}'
+	)({ filepath: 'test.hbs' }));
+	const expectedError = `[test.hbs] - {{component \"fixtures/array-test\"}} data should have required property 'colors'`;
+	t.is(error, expectedError);
 	t.pass();
 });
 

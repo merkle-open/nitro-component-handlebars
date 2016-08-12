@@ -90,6 +90,16 @@ function ComponentHandlebarsHelper(userConfig) {
 				hbs.handlebars.compile(componentTemplate)(componentRenderData, handlebarsHelperContext)
 			);
 		} catch (err) {
+			// Try to write an expressive error message
+			let errMessage = `{{component "${componentName}"}} ${err.message}`;
+			if (handlebarsHelperContext &&
+				handlebarsHelperContext.data &&
+				handlebarsHelperContext.data.root &&
+				handlebarsHelperContext.data.root.filepath) {
+				const relativePath = path.relative(config.rootDirectory, handlebarsHelperContext.data.root.filepath);
+				errMessage = `[${relativePath}] - ${errMessage}`;
+			}
+			err.message = errMessage;
 			return config.errorHandler(err, componentName);
 		}
 	};
