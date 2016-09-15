@@ -2,6 +2,7 @@
 'use strict';
 const assert = require('assert');
 const _ = require('lodash');
+const EventEmitter = require('events').EventEmitter;
 const fs = require('fs');
 const path = require('path');
 const hbs = require('hbs');
@@ -35,6 +36,8 @@ function ComponentHandlebarsHelper(userConfig) {
 		errorHandler: (err) => { throw err; }
 	}, userConfig);
 
+	const eventEmitter = new EventEmitter();
+
 	/**
 	 * handlebars helper: {{component ComponentName Data Variation}}
 	 *
@@ -51,7 +54,7 @@ function ComponentHandlebarsHelper(userConfig) {
 	 * @param {Object} handlebarsHelperContext the handlebars conext object
 	 * @returns {string} rendered component
 	 */
-	return function component(componentName, handlebarsHelperContext) {
+	return _.extend(function component(componentName, handlebarsHelperContext) {
 		try {
 			assert(typeof componentName === 'string', 'componentName is required: e.g. {{component "base/atoms/button"}}');
 			assert(arguments.length === 2, 'syntax error please use {{component "base/atoms/button" setting="value"}}');
@@ -100,9 +103,10 @@ function ComponentHandlebarsHelper(userConfig) {
 				errMessage = `[${relativePath}] - ${errMessage}`;
 			}
 			err.message = errMessage;
+			eventEmitter.emit('error', err);
 			return config.errorHandler(err, componentName);
 		}
-	};
+	}, eventEmitter);
 }
 
 module.exports = ComponentHandlebarsHelper;

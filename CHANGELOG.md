@@ -1,6 +1,10 @@
 Change History
 ==============
 
+v0.0.4
+------
+* Add error event
+
 v0.0.3
 ------
 * Improve error messages

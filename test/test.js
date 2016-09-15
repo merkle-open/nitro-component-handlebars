@@ -253,3 +253,16 @@ test('should tell the file name of the error source', async (t) => {
 	t.pass();
 });
 
+test('should tell the file name of the error source', async (t) => {
+	const component = renderer({ rootDirectory: __dirname, useSchema: true });
+	let error;
+	component.on('error', (err) => { error = err; });
+	Handlebars.registerHelper('component', component);
+	getErrorMessage(() => Handlebars.compile(
+		'{{component "fixtures/array-test"}}'
+	)({ filepath: 'test.hbs' }));
+	const expectedError = `[test.hbs] - {{component \"fixtures/array-test\"}} data should have required property 'colors'`;
+	t.is(error.message, expectedError);
+	t.pass();
+});
+
