@@ -1,4 +1,4 @@
-/* eslint-disable prefer-rest-params */
+/* eslint-disable prefer-rest-params, complexity */
 'use strict';
 const assert = require('assert');
 const _ = require('lodash');
@@ -55,6 +55,7 @@ function ComponentHandlebarsHelper(userConfig) {
 	 * @returns {string} rendered component
 	 */
 	return _.extend(function component(componentName, handlebarsHelperContext) {
+		let componentRenderData = {};
 		try {
 			assert(typeof componentName === 'string', 'componentName is required: e.g. {{component "base/atoms/button"}}');
 			assert(arguments.length === 2, 'syntax error please use {{component "base/atoms/button" setting="value"}}');
@@ -79,7 +80,7 @@ function ComponentHandlebarsHelper(userConfig) {
 			// Get template render data
 			const baseRenderData = TemplateResolver.getComponentRenderData(componentInformation);
 			// Allow to modify the render data
-			const componentRenderData = config.preRenderHandler(
+			componentRenderData = config.preRenderHandler(
 				baseRenderData,
 				componentInformation
 			);
@@ -94,7 +95,9 @@ function ComponentHandlebarsHelper(userConfig) {
 			);
 		} catch (err) {
 			// Try to write an expressive error message
-			let errMessage = `{{component "${componentName}"}} ${err.message}`;
+			const name = handlebarsHelperContext && handlebarsHelperContext.name;
+			let errMessage = `${name} (${componentName}) with arguments: ${JSON.stringify(componentRenderData)}` +
+				` failed because ${err.message}`;
 			if (handlebarsHelperContext &&
 				handlebarsHelperContext.data &&
 				handlebarsHelperContext.data.root &&
