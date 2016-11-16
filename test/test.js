@@ -248,7 +248,7 @@ test('should tell the file name of the error source', async (t) => {
 	const error = getErrorMessage(() => Handlebars.compile(
 		'{{component "fixtures/array-test"}}'
 	)({ filepath: 'test.hbs' }));
-	const expectedError = `[test.hbs] - {{component \"fixtures/array-test\"}} data should have required property 'colors'`;
+	const expectedError = `[test.hbs] - {{component "fixtures/array-test"}} data should have required property 'colors'`;
 	t.is(error, expectedError);
 	t.pass();
 });
@@ -261,7 +261,7 @@ test('should tell the file name of the error source', async (t) => {
 	getErrorMessage(() => Handlebars.compile(
 		'{{component "fixtures/array-test"}}'
 	)({ filepath: 'test.hbs' }));
-	const expectedError = `[test.hbs] - {{component \"fixtures/array-test\"}} data should have required property 'colors'`;
+	const expectedError = `[test.hbs] - {{component "fixtures/array-test"}} data should have required property 'colors'`;
 	t.is(error.message, expectedError);
 	t.pass();
 });

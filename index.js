@@ -33,7 +33,7 @@ function ComponentHandlebarsHelper(userConfig) {
 		// Prevalidate handler to modify the schema
 		preValidateHandler: (schema) => schema,
 		// Allows to set a custom error handler
-		errorHandler: (err) => { throw err; }
+		errorHandler: (err) => { throw err; },
 	}, userConfig);
 
 	const eventEmitter = new EventEmitter();
@@ -65,7 +65,7 @@ function ComponentHandlebarsHelper(userConfig) {
 				templateFile: templatePath,
 				templateDirectory: path.dirname(templatePath),
 				handlebarsHelperContext,
-				config
+				config,
 			};
 			// Get template schema
 			const baseSchema = config.useSchema

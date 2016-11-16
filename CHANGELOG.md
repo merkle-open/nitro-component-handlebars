@@ -1,6 +1,10 @@
 Change History
 ==============
 
+v0.0.5
+------
+* Update dependencies
+
 v0.0.4
 ------
 * Add error event
