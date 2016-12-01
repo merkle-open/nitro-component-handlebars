@@ -266,3 +266,20 @@ test('should tell the file name of the error source', async (t) => {
 	t.pass();
 });
 
+test('should pass if oneOf requirements are met', async (t) => {
+	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
+	const error = getErrorMessage(() => Handlebars.compile(
+			'{{component "fixtures/one-of-test" id="test-id"}}'
+		)({ filepath: 'test.hbs' }));
+	t.is(error, undefined);
+	t.pass();
+});
+
+test('should pass if oneOf requirements are met', async (t) => {
+	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
+	const error = getErrorMessage(() => Handlebars.compile(
+			'{{component "fixtures/one-of-test" name="test-name"}}'
+		)({ filepath: 'test.hbs' }));
+	t.is(error, undefined);
+	t.pass();
+});
