@@ -1,6 +1,10 @@
 Change History
 ==============
 
+v0.0.6
+------
+* Add support for oneOf
+
 v0.0.5
 ------
 * Update dependencies
