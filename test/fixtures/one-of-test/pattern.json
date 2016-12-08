@@ -1,0 +1,17 @@
+{
+  "title": "OneOf Test",
+  "stability": "unstable",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "oneOf":[
+    { "required": [ "id" ] },
+    { "required": [ "name" ] },
+    { "type": "string" }
+  ]
+}
