@@ -1,6 +1,10 @@
 Change History
 ==============
 
+v0.0.7
+------
+* Fix tests and yarn.lock
+
 v0.0.6
 ------
 * Add support for oneOf
