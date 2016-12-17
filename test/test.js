@@ -247,7 +247,7 @@ test('should tell the file name of the error source', async (t) => {
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
 	const error = getErrorMessage(() => Handlebars.compile(
 		'{{component "fixtures/array-test"}}'
-	)({ filepath: 'test.hbs' }));
+	)({ filepath: path.join(__dirname, 'test.hbs') }));
 	const expectedError = `[test.hbs] - component (fixtures/array-test) with arguments: {"disabled":false} failed because data should have required property 'colors'`;
 	t.is(error, expectedError);
 	t.pass();
@@ -260,7 +260,7 @@ test('should tell the file name of the error source', async (t) => {
 	Handlebars.registerHelper('component', component);
 	getErrorMessage(() => Handlebars.compile(
 		'{{component "fixtures/array-test"}}'
-	)({ filepath: 'test.hbs' }));
+	)({ filepath: path.join(__dirname, 'test.hbs') }));
 	const expectedError = `[test.hbs] - component (fixtures/array-test) with arguments: {"disabled":false} failed because data should have required property 'colors'`;
 	t.is(error.message, expectedError);
 	t.pass();
@@ -270,7 +270,7 @@ test('should pass if oneOf requirements are met', async (t) => {
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
 	const error = getErrorMessage(() => Handlebars.compile(
 			'{{component "fixtures/one-of-test" id="test-id"}}'
-		)({ filepath: 'test.hbs' }));
+		)({ filepath: path.join(__dirname, 'test.hbs') }));
 	t.is(error, undefined);
 	t.pass();
 });
@@ -279,7 +279,7 @@ test('should pass if oneOf requirements are met', async (t) => {
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname, useSchema: true }));
 	const error = getErrorMessage(() => Handlebars.compile(
 			'{{component "fixtures/one-of-test" name="test-name"}}'
-		)({ filepath: 'test.hbs' }));
+		)({ filepath: path.join(__dirname, 'test.hbs') }));
 	t.is(error, undefined);
 	t.pass();
 });
