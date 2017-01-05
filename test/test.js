@@ -66,7 +66,7 @@ test('should resolve a partial template path', async (t) => {
 
 test('should render a template path', async (t) => {
 	Handlebars.registerHelper('component', renderer({ rootDirectory: __dirname }));
-	const html = Handlebars.compile('{{component "fixtures/demo-button"}}')({});
+	const html = Handlebars.compile('{{component "fixtures/demo-button"}}', { strict: true })({});
 	const expectedHtml = '<button class="ux-a-button" >\n  \n</button>\n';
 	t.is(html, expectedHtml);
 	t.pass();
